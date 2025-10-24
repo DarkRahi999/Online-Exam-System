@@ -1,38 +1,15 @@
-import { Collection, Entity, Enum, ManyToMany, ManyToOne, OneToMany, Property } from '@mikro-orm/core';
-import { Table } from 'src/config/entity/base.entity';
-import { Permission, Role } from 'src/config/entity/role.entity';
+import { Entity, Enum, Property } from '@mikro-orm/core';
+import { Table } from '../../config/entity/base.entity';
+import { Gender } from '../../utils/enums';
+import { UserRole } from '../../utils/enums';
 
-export enum GenderEnum {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  OTHER = 'OTHER',
-}
-
-@Entity({ schema: '*' })
+@Entity({ tableName: 'user' })
 export class User extends Table {
-  // @Property({ default: 'client_default_avatar.png' })
-  // avatar?: string = 'client_default_avatar.png';
-
-  @Property({ length: 64 , default: '' })
+  @Property({ length: 64, default: '' })
   firstName: string;
 
   @Property({ nullable: true })
   lastName?: string;
-
-  @ManyToOne(() => Role)
-  role: Role;
-
-  @Enum({ items: () => GenderEnum, nullable: true })
-  gender?: GenderEnum;
-
-  // @Property({ length: 64, nullable: true })
-  // fatherName?: string;
-
-  // @Property({ length: 64, nullable: true })
-  // motherName?: string;
-
-  @Property({ nullable: true, type: 'datetime' })
-  dob?: Date;
 
   @Property({ length: 64, unique: true })
   email: string;
@@ -40,9 +17,15 @@ export class User extends Table {
   @Property()
   password: string;
 
-  @Property({ length: 16, default: '' })
+  @Property({ length: 16, default: '', unique: true })
   phone: string;
-  
+
+  @Enum({ items: () => Gender, nullable: true })
+  gender?: Gender;
+
+  @Property({ nullable: true, type: 'datetime' })
+  dob?: Date;
+
   @Property({ length: 16, nullable: true })
   religion?: string;
 
@@ -58,17 +41,11 @@ export class User extends Table {
   @Property({ length: 64, nullable: true })
   studentId?: string = '';
 
-  // @Property({ length: 64, nullable: true })
-  // courseName?: string = '';
+  // Added fields referenced in seed file
+  @Property({ nullable: true })
+  acceptTerms?: boolean;
 
-  @OneToMany(() => Role, (role) => role.createdBy)
-  createdRoles = new Collection<Role>(this);
-
-  @OneToMany(() => Role, (role) => role.deletedBy)
-  deletedRoles = new Collection<Role>(this);
-
-  @ManyToMany(() => Permission, (permission) => permission.users, {
-    owner: true,
-  })
-  permissions? = new Collection<Permission>(this);
+  // Simple role field instead of complex relationship
+  @Enum({ items: () => UserRole, default: UserRole.USER })
+  role: UserRole = UserRole.USER;
 }

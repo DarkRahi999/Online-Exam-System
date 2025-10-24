@@ -15,7 +15,7 @@ export abstract class Table extends BaseEntity {
     updatedAt?: Date = new Date();
 }
 
-@Entity({ schema: '*' })
+@Entity({ tableName: 'setting' })
 export class Setting extends Table {
     @Property({ unique: true, length: 128 })
     key: string;
