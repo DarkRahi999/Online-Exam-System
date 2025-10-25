@@ -6,6 +6,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './config/jwt.strategy';
 import mikroOrmConfig from './config/mikro-orm.config';
+import { QuestionManagementModule } from './question-management/question-management.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import mikroOrmConfig from './config/mikro-orm.config';
     }),
     MikroOrmModule.forRoot(mikroOrmConfig),
     AuthModule,
+    QuestionManagementModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],

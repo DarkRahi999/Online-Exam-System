@@ -2,13 +2,19 @@ import * as dotenv from 'dotenv';
 import { defineConfig, PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { User } from '../auth/entity/user.entity';
 import { Setting } from './entity/base.entity';
+import { Course } from '../question-management/course.entity';
+import { Group } from '../question-management/group.entity';
+import { Subject } from '../question-management/subject.entity';
+import { Chapter } from '../question-management/chapter.entity';
+import { SubChapter } from '../question-management/subchapter.entity';
+import { Question } from '../question-management/question.entity';
 
 dotenv.config();
 
 export default defineConfig({
   driver: PostgreSqlDriver,
   clientUrl: process.env.DATABASE_URL,
-  entities: [User, Setting],
+  entities: [User, Setting, Course, Group, Subject, Chapter, SubChapter, Question],
   debug: false,
   allowGlobalContext: true,
   pool: {

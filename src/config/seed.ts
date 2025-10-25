@@ -60,6 +60,8 @@ export async function runSeeding(syncOnly: boolean = false) {
           role: UserRole.SUPER_ADMIN,
           password: hashedPassword,
           acceptTerms: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         });
 
         await em.persistAndFlush(superAdmin);

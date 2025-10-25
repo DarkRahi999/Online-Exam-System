@@ -44,6 +44,8 @@ export class AuthService {
       bloodGroup: createUserDto.bloodGroup,
       studentId: createUserDto.studentId,
       role: UserRole.USER, // Explicitly set the role
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     await this.em.persistAndFlush(user);
@@ -91,5 +93,9 @@ export class AuthService {
 
   async validateUserById(userId: string): Promise<User | null> {
     return await this.em.findOne(User, { id: Number(userId) });
+  }
+
+  async findById(userId: number): Promise<User | null> {
+    return await this.em.findOne(User, { id: userId });
   }
 }

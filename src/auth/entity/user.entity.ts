@@ -14,7 +14,7 @@ export class User extends Table {
   @Property({ length: 64, unique: true })
   email: string;
 
-  @Property()
+  @Property({ hidden: true })
   password: string;
 
   @Property({ length: 16, default: '', unique: true })

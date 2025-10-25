@@ -5,14 +5,14 @@ export abstract class Table extends BaseEntity {
     id!: number;
 
     @Property({ defaultRaw: 'now()' })
-    createdAt?: Date = new Date();
+    createdAt: Date = new Date();
 
     @Property({
         defaultRaw: 'now()',
         onUpdate: () => 'now()',
-        onCreate: () => null,
+        onCreate: () => new Date(),
     })
-    updatedAt?: Date = new Date();
+    updatedAt: Date = new Date();
 }
 
 @Entity({ tableName: 'setting' })
